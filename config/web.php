@@ -37,6 +37,7 @@ $config = [
                     'fileMap' => [
                         'app'       => 'app.php',
                         'app/error' => 'error.php',
+                        'app/forms'     => 'forms.php',
                     ],
                 ],
             ],

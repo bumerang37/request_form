@@ -2,13 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SignupForm;
 
 class SiteController extends Controller
 {
@@ -87,6 +90,26 @@ class SiteController extends Controller
     }
 
     /**
+     * Sign up user and validate user date
+     */
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signUp()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Logout action.
      *
      * @return Response
@@ -125,4 +148,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 }

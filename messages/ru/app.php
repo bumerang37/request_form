@@ -6,6 +6,7 @@ return array(
     'Feedback' => 'Отправить заявку',
     'Login' => 'Войти',
     'Logout' => 'Выйти',
+    'Signup' => 'Регистрация',
 
 
 

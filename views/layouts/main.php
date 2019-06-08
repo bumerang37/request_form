@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -35,29 +36,52 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    $menuItems = [
+        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+        ['label' => Yii::t('app', 'About'), 'url' => ['/site/about']],
+        ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
+    ];
+
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
+    } else  {
+        $menuItems[] =  ['label' => Yii::t('app', 'Requests'), 'url' => ['/site/requests']];
+        $menuItems[] =  '<li>'
+            .Html::beginForm(['/site/logout', 'post'])
+            . Html::submitButton(
+                                Yii::t('app', 'Logout'). ' (' . Yii::$app->user->identity->username . ')',
+                                ['class' => 'btn btn-link logout']
+                            )
+            .Html::endForm()
+            .'</li>';
+    }
+
+    //    echo Nav::widget([
+    //        'options' => ['class' => 'navbar-nav navbar-right'],
+    //        'items' => [
+    //            !Yii::$app->user->isGuest ? (
+    //            ['label' => Yii::t('app', 'Requests'), 'url' => ['/site/requests']]) : '',
+    //            Yii::$app->user->isGuest ? (
+    //                ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']]
+    //            ) : (
+    //                '<li>'
+    //                . Html::beginForm(['/site/logout'], 'post')
+    //                . Html::submitButton(
+    //                    Yii::t('app', 'Logout'). ' (' . Yii::$app->user->identity->username . ')',
+    //                    ['class' => 'btn btn-link logout']
+    //                )
+    //                . Html::endForm()
+    //                . '</li>'
+    //            )
+    //        ],
+    //    ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-            ['label' => Yii::t('app', 'About'), 'url' => ['/site/about']],
-            ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
-            !Yii::$app->user->isGuest ? (
-            ['label' => Yii::t('app', 'Requests'), 'url' => ['/site/requests']]) : '',
-//            ['label' => 'Авторизация', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    Yii::t('app', 'Logout'). ' (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $menuItems,
     ]);
+
     NavBar::end();
     ?>
 

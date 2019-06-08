@@ -54,6 +54,18 @@ class LoginForm extends Model
     }
 
     /**
+     * Set fields definition depends current language.
+     */
+    public function attributeLabels()
+    {
+        return [
+          'username' => Yii::t('app','username'),
+          'password' => Yii::t('app', 'password'),
+          'rememberMe'  => Yii::t('app', 'rememberMe')
+        ];
+    }
+
+    /**
      * Logs in a user using the provided username and password.
      * @return bool whether the user is logged in successfully
      */

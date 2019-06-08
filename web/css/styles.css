@@ -1,0 +1,10 @@
+
+
+span.note:before {
+    position: relative;
+    top: -0.4em;
+}
+
+span.note {
+    color: #24B1E6;
+}

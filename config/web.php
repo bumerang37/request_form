@@ -25,6 +25,10 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
+        //TODO: Переопределить класс для user. Чтобы была возможность обращаться к полям модели User без identify Yii::$app->user->identify->..
+//        'user' => [
+//            'class' => 'app\components\User', // extend User component
+//        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -41,6 +45,14 @@ $config = [
                     ],
                 ],
             ],
+        ],
+        'formatter' => [
+            'locale' => 'ru-RU',
+            'defaultTimeZone' => 'Europe/Moscow',
+            'timeZone' => 'Asia/Yekaterinburg',
+            'dateFormat' => 'dd.MM.yyyy',
+            'timeFormat' => 'HH:mm:ss',
+            'datetimeFormat' => 'dd.MM.yyyy HH:mm:ss',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

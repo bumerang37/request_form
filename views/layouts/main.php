@@ -29,6 +29,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+//    var_dump(Yii::$app->user->identity->username);die;
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
@@ -40,14 +41,14 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'About'), 'url' => ['/site/about']],
-        ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
+        ['label' => Yii::t('app', 'Create request'), 'url' => ['/request/create/']],
     ];
 
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
         $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
     } else  {
-        $menuItems[] =  ['label' => Yii::t('app', 'Requests'), 'url' => ['/site/requests']];
+        $menuItems[] =  ['label' => Yii::t('app', 'Read Requests'), 'url' => ['/request/']];
         $menuItems[] =  '<li>'
             .Html::beginForm(['/site/logout', 'post'])
             . Html::submitButton(
@@ -58,25 +59,6 @@ AppAsset::register($this);
             .'</li>';
     }
 
-    //    echo Nav::widget([
-    //        'options' => ['class' => 'navbar-nav navbar-right'],
-    //        'items' => [
-    //            !Yii::$app->user->isGuest ? (
-    //            ['label' => Yii::t('app', 'Requests'), 'url' => ['/site/requests']]) : '',
-    //            Yii::$app->user->isGuest ? (
-    //                ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']]
-    //            ) : (
-    //                '<li>'
-    //                . Html::beginForm(['/site/logout'], 'post')
-    //                . Html::submitButton(
-    //                    Yii::t('app', 'Logout'). ' (' . Yii::$app->user->identity->username . ')',
-    //                    ['class' => 'btn btn-link logout']
-    //                )
-    //                . Html::endForm()
-    //                . '</li>'
-    //            )
-    //        ],
-    //    ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
@@ -86,8 +68,12 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+        <?php
+//        $this->params['breadcrumbs'][] = ['homelink' => false];
+                ?>
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>

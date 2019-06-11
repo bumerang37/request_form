@@ -26,7 +26,7 @@ $this->title = 'Главная страница';
             <div class="row">
 
                 <div class="col-lg-<? echo Yii::$app->user->isGuest ? "6 " : "6 col-lg-offset-3 text-center" ?>">
-                    <a class="btn btn-lg bg-info" href="<?= \yii\helpers\Url::to(['site/requests'])?>">Просмотреть созданные заявки</a>
+                    <a class="btn btn-lg bg-info" href="<?= \yii\helpers\Url::to(['/request'])?>">Просмотреть созданные заявки</a>
 
 
                 </div>

@@ -14,7 +14,7 @@ $this->title = 'Главная страница';
 
         <p><a class="btn btn-lg btn-success" href="<?= \yii\helpers\Url::to(['site/login']) ?>">Перейти к
                 авторизации</a></p>
-        <p class="lead">и заполнению <a href=""><span class='note'
+        <p class="lead">и заполнению <a href="<?= \yii\helpers\Url::to(['/request/create'])?>"><span class='note'
                                                       data-toggle="tooltip"
                                                       title="Просматривать оставленные заявки могут только авторизованные пользователи">формы обратной
             связи</span></a></p>
@@ -26,7 +26,7 @@ $this->title = 'Главная страница';
             <div class="row">
 
                 <div class="col-lg-<? echo Yii::$app->user->isGuest ? "6 " : "6 col-lg-offset-3 text-center" ?>">
-                    <a class="btn btn-lg bg-info" href="<?= \yii\helpers\Url::to(['site/requests'])?>">Просмотреть созданные заявки</a>
+                    <a class="btn btn-lg bg-info" href="<?= \yii\helpers\Url::to(['/request'])?>">Просмотреть созданные заявки</a>
 
 
                 </div>

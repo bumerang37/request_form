@@ -18,7 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app/forms', 'Create Request'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+//    $model->date_start = '2019-02-11';
+//    $model->date_end = '2019-03-15';
+    // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -39,12 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
 
 
+                    /** @var $data \app\models\Request */
                     return Html::img($data->getImage(),
                         ['width' => '200px']);
                 },
             ],
             [
-                'format' => 'datetime',
+                'format' => 'date',
                 'attribute' => 'created_at',
 //                'value' => function (\app\models\Request $data) {
 //                    return Yii::$app->formatter->asDatetime($data->created_at);
@@ -53,14 +57,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
 //                    'name' => 'insert_date',
                     'attribute' => 'created_at',
-                    'startAttribute' => $date_start,
-                    'endAttribute' => $date_end,
+                    'convertFormat'=>true,
+                    'startAttribute' => 'date_start',
+                    'endAttribute' => 'date_end',
 //                    'type'      => \kartik\daterange\DateRangePicker::TYPE_RANGE,
 //                    'separator' => '-',
+                    'pluginEvents' => [
+                        "cancel.daterangepicker" => "function(ev, picker) { 
+                        var poleDate = picker.element[0].nextElementSibling; 
+                        $(poleDate).val('').trigger('change'); 
+                        }",
+                    ],
                     'pluginOptions' => [
                         'locale' => [
                             'cancelLabel' => 'Clear',
-                            'format' => 'd.MM.Y',
+                            'format' => 'Y-m-d',
+//                            'format' => 'd.MM.Y',
                             'autoclose' => true,
                         ]
                     ],

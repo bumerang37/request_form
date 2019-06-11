@@ -1,5 +1,8 @@
 <?php
 
+
+use kartik\datecontrol\Module;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -14,12 +17,26 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'k19-8qy7zFzSzBctWBjB1QvMpFc7n_ZH',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'datecontrol' => [
+            'class' => 'kartik\datecontrol\Module',
+            'displaySettings' => [
+                Module::FORMAT_DATE => 'php:dd-MM-yyyy'
+            ],
+
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -50,9 +67,10 @@ $config = [
             'locale' => 'ru-RU',
             'defaultTimeZone' => 'Europe/Moscow',
             'timeZone' => 'Asia/Yekaterinburg',
-            'dateFormat' => 'dd.MM.yyyy',
+            'dateFormat' => 'dd-MM-yyyy',
             'timeFormat' => 'HH:mm:ss',
-            'datetimeFormat' => 'dd.MM.yyyy HH:mm:ss',
+//            'datetimeFormat' => 'dd.MM.yyyy HH:mm:ss',
+//            'datetimeFormat' => 'Y-m-d',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -82,6 +100,8 @@ $config = [
     ],
     'params' => $params,
 ];
+
+Yii::$app->params['bsDependencyEnabled'] = false;
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

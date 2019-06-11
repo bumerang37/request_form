@@ -36,11 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'message',
             [
                 'attribute' => 'image',
-                'filterType' => GridView::FILTER_DATE_RANGE,
+//                'filterType' => GridView::FILTER_DATE_RANGE,
                 'format' => 'html',
                 'value' => function ($data) {
-
-
                     return Html::img($data->getImage(),
                         ['width' => '200px']);
                 },

@@ -83,6 +83,14 @@ class Request extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Save image into uploads folder and save image based on current date like 2019/06/19
+     *
+     * @param bool $insert
+     * @param array $changedAttributes
+     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
+     */
     public function afterSave($insert, $changedAttributes)
     {
         if (isset($this->image)) {
@@ -91,15 +99,19 @@ class Request extends \yii\db\ActiveRecord
                 $path = Url::to('@webroot/uploads/');
                 BaseFileHelper::createDirectory($path . date('Y') . "/" . date('m') . "/" . date('d'), 0777, true);
                 $image_fullpath = "/uploads/" . date('Y') . '/' . date('m') . '/' . date('d');
-                $this->image->saveAs($path . date('Y') . '/' . date('m') . '/' . date('d') . '/' . $this->request_id . "_" . $this->image);   //saving img in folder
+                $this->image->saveAs($path . date('Y') . '/' . date('m') . '/' . date('d') . '/' . $this->request_id . "_" . $this->image);
                 $this->image = $image_fullpath . "/" . $this->request_id . "_" . $this->image;    //appending id to image name
                 \Yii::$app->db->createCommand()
                     ->update('request', ['image' => $this->image], 'request_id = "' . $this->request_id . '"')
-                    ->execute(); //manually update image name to db
+                    ->execute();
             }
         }
     }
 
+    /**
+     *When request delete then this function delete associated image link and remove image of current request
+     *
+     */
     public function afterDelete()
     {
         parent::afterDelete();

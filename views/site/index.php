@@ -14,7 +14,11 @@ $this->title = 'Главная страница';
 
         <p><a class="btn btn-lg btn-success" href="<?= \yii\helpers\Url::to(['site/login']) ?>">Перейти к
                 авторизации</a></p>
+<<<<<<< HEAD
         <p class="lead">и заполнению <a href="<?= \yii\helpers\Url::to(['/request/create'])?>"><span class='note'
+=======
+        <p class="lead">и заполнению <a href="<?= \yii\helpers\Url::to(['/request/index'])?>"><span class='note'
+>>>>>>> e7d5e51660fcee8c12f858c9bc46026a5d5f436c
                                                       data-toggle="tooltip"
                                                       title="Просматривать оставленные заявки могут только авторизованные пользователи">формы обратной
             связи</span></a></p>

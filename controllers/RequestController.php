@@ -90,8 +90,9 @@ class RequestController extends Controller
     {
         $model = new Request();
 
+
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_at = time();
+                $model->created_at = time();
             $model->updated_at = time();
 
 //            if($model->file = UploadedFile::getInstance($model, 'file'))

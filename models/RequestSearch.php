@@ -20,7 +20,8 @@ class RequestSearch extends Request
     public function rules()
     {
         return [
-            [['request_id', 'created_at', 'updated_at'], 'integer'],
+            [['request_id',  'updated_at'], 'integer'],
+            [[ 'date_start', 'date_end','created_at'],'date'],
             [['name', 'message', 'list'], 'safe'],
         ];
     }
@@ -45,8 +46,11 @@ class RequestSearch extends Request
     {
         $query = Request::find();
 
-        $date_start = date('Y-m-d', strtotime('-7 days'));
-        $date_end = date('Y-m-d');
+//        $date_start = date('Y-m-d', strtotime('-7 days'));
+//        $date_end = date('Y-m-d');
+
+        $date_start = date('dd-MM-yyyy', strtotime('-7 days'));
+        $date_end = date('dd-MM-yyyy');
 
         // add conditions that should always apply here
 
@@ -64,8 +68,13 @@ class RequestSearch extends Request
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
+            $query->andFilterWhere(['>=', 'created_at', $this->date_start]);
+            $query->andFilterWhere(['<=', 'created_at', $this->date_end]);
+
             return $dataProvider;
         }
+
+        $query->andFilterWhere(['like', 'timestamp', $this->created_at]);
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -79,8 +88,7 @@ class RequestSearch extends Request
 //            ->andFilterWhere(['like', 'file', $this->file])
             ->andFilterWhere(['like', 'list', $this->list]);
 
-        $query->andFilterWhere(['>=', 'date', $this->date_start]);
-        $query->andFilterWhere(['<=', 'date', $this->date_end]);
+
 
         return $dataProvider;
     }
@@ -92,8 +100,8 @@ class RequestSearch extends Request
                 'attribute' => 'created_at',
                 'dateStartAttribute' => 'date_start',
                 'dateEndAttribute' => 'date_end',
-                'dateStartFormat' => 'd-m-Y',
-                'dateEndFormat' => 'd-m-Y',
+                'dateStartFormat' => 'Y-m-d',
+                'dateEndFormat' => 'Y-m-d',
 
             ]
         ];
